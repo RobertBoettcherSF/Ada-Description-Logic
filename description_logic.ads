@@ -26,7 +26,7 @@ package Description_Logic is
    type Interpretation is record
       Size     : Domain_Size := 0; -- The active domain size
       Concepts : Concept_Map := (others => (others => False));
-      Roles    : Role_Map    := (others => (others => False));
+      Roles    : Role_Map    := (others => (others => (others => False)));
    end record;
 
    -- ALC (Attributive Concept Language with Complements) constructs
