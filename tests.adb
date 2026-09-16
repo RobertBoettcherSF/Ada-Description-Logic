@@ -195,10 +195,14 @@ begin
    Put_Line ("TEST 13 — Exception Handling");
    begin
       declare
-         Bad_Set : Individual_Set;
+         procedure Discard_Set (S : Individual_Set) is
+            pragma Unreferenced (S);
+         begin
+            null;
+         end Discard_Set;
       begin
          -- Expr.Last is currently around 30. N=100 is invalid.
-         Bad_Set := Evaluate (I, Expr, 100);
+         Discard_Set (Evaluate (I, Expr, 100));
          Check ("13.1 Invalid Node should raise exception", False);
       end;
    exception
@@ -210,13 +214,17 @@ begin
    begin
       declare
          Overflow_Expr : Concept_Expression;
-         Dummy         : Node_ID;
+         procedure Discard_Node (N : Node_ID) is
+            pragma Unreferenced (N);
+         begin
+            null;
+         end Discard_Node;
       begin
          -- Max_Nodes is 128
          for Idx in 1 .. 128 loop
-            Dummy := Add_Top (Overflow_Expr);
+            Discard_Node (Add_Top (Overflow_Expr));
          end loop;
-         Dummy := Add_Top (Overflow_Expr); -- Should overflow
+         Discard_Node (Add_Top (Overflow_Expr)); -- Should overflow
          Check ("13.3 Expression Full should raise exception", False);
       end;
    exception
